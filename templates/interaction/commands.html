@@ -1,0 +1,36 @@
+{% extends 'interaction/base.html' %}
+
+{% block title %} Commands {% endblock %}
+
+{% block content %}
+
+   <div class="form-group">
+   <label for="title" >Включение выключение датчиков</label>
+   </div>
+
+    <select class="form-select" >
+  <option selected>Insert IP sensor</option>
+  <option value="1">192.168.0.89</option>
+ </select>
+
+
+
+<form action="{% url 'off_sensor' %}" method="GET">
+{#                  {% csrf_token %}#}
+    <button type="submit" class="btn btn-danger">OFF</button>
+</form>
+
+<form action="{% url 'on_sensor' %}" method="GET">
+{#                  {% csrf_token %}#}
+    <button type="submit" class="btn btn-success">On</button>
+</form>
+
+<form action="{% url 'next' %}" method="get">
+{#                  {% csrf_token %}#}
+    <button type="submit" class="btn btn-success">next</button>
+
+</form>
+
+
+
+{% endblock %}
