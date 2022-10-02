@@ -21,6 +21,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', interaction_views.home, name='home'),
     path('interaction/', include('interaction.urls')),
-
-
 ]
