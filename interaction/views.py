@@ -18,7 +18,7 @@ def settings(request):
 
 
 def commands(request):
-    return render(request, 'interaction/commands.html', {'content': '<h1>Сommands</h1>'})
+    return render(request, 'interaction/commands.html', {'content': '<h1>Commands</h1>'})
 
 
 def next_pages(request):
@@ -26,15 +26,27 @@ def next_pages(request):
 
 
 # отправляем запрос GET на датчик (IP получаем через регистрации по WIFI).
+#правильный способ!!!!.
+# def sensor(request, status: str):
+#     url_sensor = 'http://192.168.0.89/'
+#     switch = requests.post(url_sensor + f'cm?cmnd=Power%20{status}')
+#     print(switch)
+#     switch.raise_for_status()
+#     result = switch.json()
+#     print(result)
+#     return JsonResponse(result)
+
+# костыль, пока не решу вопрос с html
+
 def on_sensor(res_on):
     url_sensor1 = 'http://192.168.0.89/'
     on = 'cm?cmnd=Power%20On'
     res_on = requests.get(url_sensor1+on)
     print(res_on)
     res_on.raise_for_status()
-    JsonResponse = res_on.json()
-    print(JsonResponse)
-    return JsonResponse
+    result_dict = res_on.json()
+    print(result_dict)
+    return JsonResponse(result_dict)
 
 
 def off_sensor(res_off):
@@ -42,9 +54,9 @@ def off_sensor(res_off):
     off = 'cm?cmnd=Power%20off'
     res_off = requests.get(url_sensor1 + off)
     # res_off.raise_for_status()
-    jsonResponse = res_off.json()
-    print(jsonResponse)
-    return jsonResponse
+    result_dict = res_off.json()
+    print(result_dict)
+    return JsonResponse(result_dict)
 
 
 
