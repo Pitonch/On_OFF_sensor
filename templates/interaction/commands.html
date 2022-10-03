@@ -2,6 +2,11 @@
 
 {% block title %} Commands {% endblock %}
 
+
+
+{#<script src="/js/js_commands.js"></script>#}
+
+
 {% block content %}
 
    <div class="form-group">
@@ -15,14 +20,22 @@
 
 
 
-<form action="{% url 'off_sensor' %}" method="GET">
-{#                  {% csrf_token %}#}
-    <button type="submit" class="btn btn-danger">OFF</button>
+
+
+<form action="{% url 'sensor' 'On' %}" method="POST">
+
+
+{% csrf_token %}
+    <button type="submit" class="btn btn-success">On</button>
+{#<button type="submit" class="btn btn-success" on-click="switch('on')">On</button>#}
 </form>
 
-<form action="{% url 'on_sensor' %}" method="GET">
-{#                  {% csrf_token %}#}
-    <button type="submit" class="btn btn-success">On</button>
+
+<form action="{% url 'sensor' 'off'%}" method="POST">
+{% csrf_token %}
+    <button type="submit" class="btn btn-danger">OFF</button>
+{#<button type="submit" class="btn btn-success" on-click="switch('on')">On</button>#}
+
 </form>
 
 <form action="{% url 'next' %}" method="get">
