@@ -3,8 +3,8 @@
 {% block title %} Commands {% endblock %}
 
 
-
-{#<script src="/js/js_commands.js"></script>#}
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <script src="ajax.js"></script>
 
 
 {% block content %}
@@ -18,23 +18,17 @@
   <option value="1">192.168.0.89</option>
  </select>
 
-
-
-
-
 <form action="{% url 'sensor' 'On' %}" method="POST">
-
-
 {% csrf_token %}
-    <button type="submit" class="btn btn-success">On</button>
-{#<button type="submit" class="btn btn-success" on-click="switch('on')">On</button>#}
+{#    <button type="submit" class="btn btn-success">On</button>#}
+<button type="submit" class="btn btn-success" on-click="switch('on')">On</button>
 </form>
 
 
 <form action="{% url 'sensor' 'off'%}" method="POST">
 {% csrf_token %}
-    <button type="submit" class="btn btn-danger">OFF</button>
-{#<button type="submit" class="btn btn-success" on-click="switch('on')">On</button>#}
+{#    <button type="submit" class="btn btn-danger">OFF</button>#}
+<button type="submit" class="btn btn-danger" on-click="switch('on')">OFF</button>
 
 </form>
 

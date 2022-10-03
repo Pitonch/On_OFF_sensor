@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Изменение настройки сенсоров</title>
+</head>
+<body>
+    <form method="POST">
+        {% csrf_token %}
+        <p>
+            <label>Введите IP устройства</label><br>
+            <input type="text" name="name" value="{{sensor.ip}}" />
+        </p>
+        <p>
+            <label>Введите место установки</label><br>
+            <input type="number" name="age" value="{{sensor.room}}" />
+        </p>
+        <input type="submit" value="Сохранить" >
+    </form>
+</body>
+</html>
