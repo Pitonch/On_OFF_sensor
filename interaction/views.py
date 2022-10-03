@@ -35,7 +35,7 @@ def sensor(request, status: str):
     print(result)
     return JsonResponse(result)
 
-# костыль, пока не решу вопрос с html
+# костыль,
 
 # def on_sensor(res_on):
 #     url_sensor1 = 'http://192.168.0.89/'
@@ -47,15 +47,7 @@ def sensor(request, status: str):
 #     print(result_dict)
 #     return JsonResponse(result_dict)
 #
-#
-# def off_sensor(res_off):
-#     url_sensor1 = 'http://192.168.0.89/'
-#     off = 'cm?cmnd=Power%20off'
-#     res_off = requests.get(url_sensor1 + off)
-#     # res_off.raise_for_status()
-#     result_dict = res_off.json()
-#     print(result_dict)
-#     return JsonResponse(result_dict)
+
 
 
 
