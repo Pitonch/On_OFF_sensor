@@ -2,7 +2,7 @@
 
 {% block title %} Commands {% endblock %}
 
-<script src="/js/js_commands.js"></script>
+{#<script src="/js/js_commands.js"></script>#}
 
 
 {% block content %}
@@ -19,16 +19,16 @@
 
 
 
-<form action="{% url 'on_sensor' %}" method="POST">
+<form action="{% url 'sensor' 'On' %}" method="POST">
 {% csrf_token %}
-{#    <button type="submit" class="btn btn-success">On</button>#}
-<button type="submit" class="btn btn-success" on-click="switch('off')">On</button>
+    <button type="submit" class="btn btn-success">On</button>
+{#<button type="submit" class="btn btn-success" on-click="switch('on')">On</button>#}
 </form>
 
-<form action="{% url 'off_sensor' %}" method="POST">
+<form action="{% url 'sensor' 'off' %}" method="POST">
 {% csrf_token %}
-{#    <button type="submit" class="btn btn-danger">OFF</button>#}
- <button type="submit" class="btn btn-danger" on-click="switch('on')">OFF</button>
+    <button type="submit" class="btn btn-danger">OFF</button>
+ <button type="submit" class="btn btn-danger" on-click="switch('off')">OFF</button>
 </form>
 
 <form action="{% url 'next' %}" method="get">
