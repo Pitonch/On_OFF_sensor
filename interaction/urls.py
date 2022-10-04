@@ -8,9 +8,9 @@ from interaction import views as interaction_views
 urlpatterns = [
     path('about/', interaction_views.about, name='url_to_about'),
     path('settings/', interaction_views.settings, name='url_to_settings'),
-    path('settings/create/', interaction_views.create),
-    path('settings/edit/<int:sensor_id>/', interaction_views.edit),
-    path('settings/delete/<int:sensor_id>/', interaction_views.delete),
+    # path('settings/create/', interaction_views.create),
+    # path('settings/edit/<int:sensor_id>/', interaction_views.edit),
+    # path('settings/delete/<int:sensor_id>/', interaction_views.delete),
     path('commands/', interaction_views.commands, name='url_to_commands'),
     # re_path(r'^commands/sensor/On|off', interaction_views.sensor, name='sensor'),
     # path('commands/off_sensor/', interaction_views.off_sensor, name='off_sensor'),

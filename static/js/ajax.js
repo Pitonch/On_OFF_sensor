@@ -12,3 +12,13 @@
 //         }
 //     });
 // }
+
+function sensor_switch(status) {
+    $.ajax({
+        url: 'commands/sensor/' + status,
+        type: 'GET',
+        success: function( data ) {
+          // Здесь можно создать проверку на вкл/откл датчика
+        }
+    });
+}
