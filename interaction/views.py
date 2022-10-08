@@ -1,10 +1,8 @@
 import requests
 from django.shortcuts import render, redirect
 from .models import Sensor
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.http import HttpResponseRedirect, HttpResponseNotFound
-
-
 
 
 def home(request):
@@ -28,35 +26,40 @@ def next_pages(request):
     return render(request, 'interaction/next.html', {'content': '<h1>next</h1>'})
 
 
-# отправляем запрос GET на датчик (IP получаем через регистрации по WIFI).
+# вывод всех датчиков
 
-#правильный способ!!!!.
 
-# правильный способ!!!!.
+def show_sensors(request):
+    all_ip_sensors = Sensor.objects.all()
+    print(all_ip_sensors)
+    return render(request, "interaction/all_sensors.html", {'all_ip_sensors': all_ip_sensors})
+
+
+def ip_sensor(request):
+    ip_ = request.GET.get('ip_sensor')
+    print('IP' + ip_)
+    # return render(request, "interaction/all_sensors.html", {'ip_': ip_sensor})
+    return HttpResponse(f'<h2>IP: {ip_}</h2>')
+
 
 def sensor_on_off(request, status: str):
-    url_sensor = 'http://192.168.0.89/'
-    switch = requests.post(url_sensor + f'cm?cmnd=Power%20{status}')
-    print(switch)
+    url_sensor = '192.168.0.89'
+    print(url_sensor)
+    switch = requests.post('http://' + url_sensor + f'/cm?cmnd=Power%20{status}')
+    # print(switch)
     switch.raise_for_status()
     result = switch.json()
     print(result)
     # return JsonResponse(result)
     #доработать через ajax
-    return redirect('/interaction/commands/')
-
-
-# вывод всех датчиков на экран с указанием их принадлежности
-
-def show_sensors(request):
-    all_ip_sensors = Sensor.objects.all()
-    return render(request, "interaction/all_sensors.html", {'all_ip_sensors': all_ip_sensors})
+    return redirect('/interaction/commands/', JsonResponse(result))
 
 
 
 
-ip_sensor = Sensor.objects.all()
-print(ip_sensor.query)
+
+
+
 
 
 

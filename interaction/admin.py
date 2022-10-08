@@ -27,7 +27,6 @@ class HomeAdmin(admin.ModelAdmin):
     search_fields = ('name_sensor',)
     list_filter = ('name_sensor', 'location',)
 
-
-    @admin.display() #description='название дома'
+    @admin.display()
     def home_name(self, obj: Sensor):
         return Home.objects.get(name_home=obj.name_sensor).name_home
