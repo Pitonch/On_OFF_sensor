@@ -1,5 +1,6 @@
 import requests
 from django.shortcuts import render, redirect
+from .models import Sensor
 from django.http import JsonResponse
 from django.http import HttpResponseRedirect, HttpResponseNotFound
 
@@ -43,6 +44,35 @@ def sensor_on_off(request, status: str):
     # return JsonResponse(result)
     #доработать через ajax
     return redirect('/interaction/commands/')
+
+
+# вывод всех датчиков на экран с указанием их принадлежности
+
+def show_sensors(request):
+    all_ip_sensors = Sensor.objects.all()
+    return render(request, "interaction/all_sensors.html", {'all_ip_sensors': all_ip_sensors})
+
+
+
+
+ip_sensor = Sensor.objects.all()
+print(ip_sensor.query)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #записm IP и room in On_OFF_sensor_db
 # получение данных из бд

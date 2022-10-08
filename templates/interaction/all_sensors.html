@@ -1,0 +1,33 @@
+{% extends 'interaction/base.html' %}
+
+{% block title %} Commands {% endblock %}
+
+{%  load static %}
+
+{% block content %}
+
+   <div class="form-group">
+
+   </div>
+<a href="#" class="list-group-item list-group-item-action active">Список всех датчиков</a>
+    {% for ip in  all_ip_sensors %}
+
+        <div class="list-group">
+  <a href="#" class="list-group-item list-group-item-action ">{{ ip.ip_sensor }}
+        <span class="badge bg-light text-dark">{{ ip.status }}</span></a>
+
+</div>
+
+
+
+
+{#    <ul class="list-group">#}
+{#  <li class="list-group-item d-flex justify-content-between align-items-center">#}
+{#    {{ ip.ip_sensor }}#}
+{#    <span class="badge bg-light text-dark">status</span>#}
+{#  </li>#}
+{#   </ul>#}
+    {% endfor %}
+
+
+{% endblock %}

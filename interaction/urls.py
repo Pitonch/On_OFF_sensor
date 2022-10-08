@@ -16,5 +16,5 @@ urlpatterns = [
     # path('commands/off_sensor/', interaction_views.off_sensor, name='off_sensor'),
     # path('commands/on_sensor/', interaction_views.on_sensor, name='on_sensor'),
     path('commands/<status>', interaction_views.sensor_on_off, name='sensor'),
-    path('commands/next/', interaction_views.next_pages, name='next'),
+    path('commands/allsensors/', interaction_views.show_sensors, name='all_sensors'),
     ]
