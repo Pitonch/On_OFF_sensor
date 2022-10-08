@@ -8,32 +8,25 @@ from .models import Home, Location, Sensor
 
 @admin.register(Home)
 class HomeAdmin(admin.ModelAdmin):
-    list_display = ('name', 'descriptions',)
-    ordering = ('name',)
-    search_fields = ('name',)
-
-    #
-    # @admin.display(description='Описание')
-    # def home_name(self, obj: Home):
-
-
-
-
-
-
-
-
+    list_display = ('name_home', 'descriptions_home',)
+    ordering = ('name_home',)
+    search_fields = ('name_home',)
 
 
 @admin.register(Location)
 class HomeAdmin(admin.ModelAdmin):
-    list_display = ('name', 'descriptions', 'home',)
-    ordering = ('name',)
-    search_fields = ('name',)
+    list_display = ('name_location', 'descriptions_location', 'home',)
+    ordering = ('name_location',)
+    search_fields = ('name_location',)
 
 
 @admin.register(Sensor)
 class HomeAdmin(admin.ModelAdmin):
-    list_display = ('ip', 'name', 'descriptions', 'location',)
-    ordering = ('name',)
-    search_fields = ('name',)
+    list_display = ('ip_sensor', 'name_sensor', 'descriptions_sensor', 'location', 'home_name',)
+    ordering = ('name_sensor',)
+    search_fields = ('name_sensor',)
+    list_filter = ('name_sensor', 'location',)
+
+    @admin.display() #description='название дома'
+    def home_name(self, obj: Sensor):
+        return Home.objects.get(name_home=obj.name_sensor).name_home

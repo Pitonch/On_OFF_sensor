@@ -40,9 +40,9 @@ def sensor_on_off(request, status: str):
     switch.raise_for_status()
     result = switch.json()
     print(result)
-    return JsonResponse(result)
+    # return JsonResponse(result)
     #доработать через ajax
-    # return redirect('/interaction/commands/')
+    return redirect('/interaction/commands/')
 
 #записm IP и room in On_OFF_sensor_db
 # получение данных из бд
