@@ -2,6 +2,7 @@ import requests
 from django.shortcuts import render, redirect
 from .models import Sensor
 from django.http import JsonResponse, HttpResponse
+from interaction import models
 from django.http import HttpResponseRedirect, HttpResponseNotFound
 
 
@@ -31,25 +32,25 @@ def next_pages(request):
 
 def show_sensors(request):
     all_ip_sensors = Sensor.objects.all()
-    print(all_ip_sensors)
+    # print(all_ip_sensors)
     return render(request, "interaction/all_sensors.html", {'all_ip_sensors': all_ip_sensors})
 
 
-def ip_sensor(request):
-    ip_ = request.GET.get('ip_sensor')
-    print('IP' + ip_)
-    # return render(request, "interaction/all_sensors.html", {'ip_': ip_sensor})
-    return HttpResponse(f'<h2>IP: {ip_}</h2>')
+def ip_(request, ip_sensor):
+    sensor = models.Sensor.objects.get(ip_sensor=ip_sensor)
+    print(sensor)
+    return render(request, "interaction/commands.html", {'ip_sensor': ip_sensor})
+    # return HttpResponse(f'<h2>IP: {ip_}</h2>')
 
 
 def sensor_on_off(request, status: str):
     url_sensor = '192.168.0.89'
-    print(url_sensor)
+    # print(url_sensor)
     switch = requests.post('http://' + url_sensor + f'/cm?cmnd=Power%20{status}')
     # print(switch)
     switch.raise_for_status()
     result = switch.json()
-    print(result)
+    # print(result)
     # return JsonResponse(result)
     #доработать через ajax
     return redirect('/interaction/commands/', JsonResponse(result))
