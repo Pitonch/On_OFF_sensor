@@ -19,7 +19,7 @@ class Location(models.Model):
 
 
 class Sensor(models.Model):
-    ip_sensor = models.GenericIPAddressField()
+    ip_sensor = models.GenericIPAddressField(unique=True, protocol='IPv4')
     name_sensor = models.CharField(max_length=100)
     descriptions_sensor = models.CharField(max_length=100)
     location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, related_name='location')

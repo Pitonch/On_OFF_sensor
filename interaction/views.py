@@ -38,14 +38,15 @@ def show_sensors(request):
 
 def ip_(request, ip_sensor):
     sensor = models.Sensor.objects.get(ip_sensor=ip_sensor)
-    print(sensor)
+    # print(sensor)
     return render(request, "interaction/commands.html", {'ip_sensor': ip_sensor})
     # return HttpResponse(f'<h2>IP: {ip_}</h2>')
 
 
-def sensor_on_off(request, status: str):
-    url_sensor = '192.168.0.89'
-    # print(url_sensor)
+def sensor_on_off(request, ip_sensor, status: str, ):
+    print('START')
+    url_sensor = models.Sensor.objects.get(ip_sensor=ip_sensor)
+    print('URL:', url_sensor)
     switch = requests.post('http://' + url_sensor + f'/cm?cmnd=Power%20{status}')
     # print(switch)
     switch.raise_for_status()

@@ -29,4 +29,4 @@ class HomeAdmin(admin.ModelAdmin):
 
     @admin.display()
     def home_name(self, obj: Sensor):
-        return Home.objects.get(name_home=obj.name_sensor).name_home
+        return Home.objects.get().name_home
