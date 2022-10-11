@@ -37,24 +37,23 @@ def show_sensors(request):
 
 
 def ip_(request, ip_sensor):
-    sensor = models.Sensor.objects.get(ip_sensor=ip_sensor)
-    # print(sensor)
     return render(request, "interaction/commands.html", {'ip_sensor': ip_sensor})
-    # return HttpResponse(f'<h2>IP: {ip_}</h2>')
 
 
-def sensor_on_off(request, ip_sensor, status: str, ):
+def sensor_on_off(request, ip_sensor, status):
     print('START')
-    url_sensor = models.Sensor.objects.get(ip_sensor=ip_sensor)
-    print('URL:', url_sensor)
-    switch = requests.post('http://' + url_sensor + f'/cm?cmnd=Power%20{status}')
-    # print(switch)
+    print(ip_sensor)
+    switch = requests.post('http://' + ip_sensor + f'/cm?cmnd=Power%20{status}')
+    print(switch)
+    print('status:', status)
+    ip_sensor.status = ip_sensor.save(update_fields=["status"])
     switch.raise_for_status()
     result = switch.json()
+
     # print(result)
-    # return JsonResponse(result)
+    return JsonResponse(result)
     #доработать через ajax
-    return redirect('/interaction/commands/', JsonResponse(result))
+    # return redirect('/interaction/', JsonResponse(result))
 
 
 

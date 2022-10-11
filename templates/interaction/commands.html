@@ -5,11 +5,13 @@
 {%  load static %}
 
 
+<script src="{% static 'js/ajax.js' %}"></script>
+
 
 {% block content %}
 
    <div class="form-group">
-   <label for="title" >{{ ip_sensor }}</label>
+   <label for="title" >{{ ip_sensor }} </label>
 {#   </div>#}
 {##}
 {#    <select class="form-select" >#}
@@ -22,19 +24,23 @@
 {##}
 {##}
 {#</div>#}
-
-<form action="{% url 'status_On_Off' 'ip_sensor' 'On' %}" method="POST">
+<div class="cotainer">
+<form action="{% url 'status_On_Off' ip_sensor 'On' %}" method="POST">
 {% csrf_token %}
 {#    <button type="submit" class="btn btn-success">On</button>#}
-<button type="submit" class="btn btn-success" onclick="switch('on')">On</button>
+<button type="submit" class="btn btn-success" onclick="switch ('on')">On</button>
 </form>
 
 
-<form action="{% url 'status_On_Off' 'ip_sensor' 'off'%}" method="POST">
+<form action="{% url 'status_On_Off' ip_sensor 'off'%}" method="POST">
 {% csrf_token %}
 {#    <button type="submit" class="btn btn-danger">OFF</button>#}
 <button type="submit" class="btn btn-danger" onclick="switch('OFF')">OFF</button>
 
 </form>
+</div>
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+ <script src="js/ajax.js"></script>
 
 {% endblock %}
