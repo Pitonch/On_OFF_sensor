@@ -40,13 +40,19 @@ def ip_(request, ip_sensor):
     return render(request, "interaction/commands.html", {'ip_sensor': ip_sensor})
 
 
+def status_(request, status):
+    return render(request, "interaction/commands.html", {'status': status})
+
+
 def sensor_on_off(request, ip_sensor, status):
     print('START')
     print(ip_sensor)
     switch = requests.post('http://' + ip_sensor + f'/cm?cmnd=Power%20{status}')
     print(switch)
     print('status:', status)
-    ip_sensor.status = ip_sensor.save(update_fields=["status"])
+    sensor_status = Sensor.objects.get(ip_sensor=status)
+    print(sensor_status)
+    # sensor_status.save(update_fields=["status"])
     switch.raise_for_status()
     result = switch.json()
 
@@ -124,7 +130,6 @@ def sensor_on_off(request, ip_sensor, status):
 #         return HttpResponseNotFound("<h2>Sensor not found</h2>")
 #
 #
-
 
 
 
