@@ -51,8 +51,6 @@ def sensor_on_off(request, ip_sensor, status):
     sensor.save(update_fields=["status"])
     switch.raise_for_status()
     result = switch.json()
-
-    # print(result)
     return JsonResponse(result)
     #доработать через ajax
     # return redirect('/interaction/', JsonResponse(result))
