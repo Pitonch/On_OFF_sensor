@@ -4,7 +4,7 @@
 
 {%  load static %}
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script src="{% static 'js/ajax.js' %}"></script>
 
 
@@ -13,35 +13,23 @@
    <div class="form-group">
    <label for="title" >{{ ip_sensor }} </label>
 
-{#   </div>#}
-{##}
-{#    <select class="form-select" >#}
-{#  <option selected>Choose IP sensor</option>#}
-{#         {% for ip in  all_ip_sensors %}#}
-{#  <option value="1">"{{ ip_sensor }}"</option>#}
-{#    {% endfor %}#}
-{# </select>#}
-{#    <div class="dropdown">#}
-{##}
-{##}
-{#</div>#}
+
 <div class="cotainer">
-<form action="{% url 'status_On_Off' ip_sensor 'On' %}" method="POST">
+<form action="{% url 'status_On_Off' ip_sensor 'on' %}" method="POST">
 {% csrf_token %}
 {#    <button type="submit" class="btn btn-success">On</button>#}
-<button type="submit" id = 'click_ON' class="btn btn-success" >On</button>
+<button type="submit" id = 'click_ON' class="btn btn-success" onclick="on">On</button>
 </form>
 
 
 <form action="{% url 'status_On_Off' ip_sensor 'off'%}" method="POST">
 {% csrf_token %}
 {#    <button type="submit" class="btn btn-danger">OFF</button>#}
-<button type="submit" id = 'click_OFF' class="btn btn-danger" >OFF</button>
+<button type="submit" id = 'click_OFF' class="btn btn-danger" onclick="off">OFF</button>
 
 </form>
 </div>
 
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
- <script src="js/ajax.js"></script>
+
 
 {% endblock %}

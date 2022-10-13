@@ -16,7 +16,7 @@
       {% if ip.status == 'on' %}
         <span class="badge bg-light text-dark btn btn-success">{{ ip.status }}</span>
       {% else %}
-          <span class="badge bg-light text-dark btn btn-danger">{{ ip.status | upper }}</span>
+          <span class="badge bg-light text-dark btn btn-danger">{{ ip.status }}</span>
       {% endif %}
         <span class="badge bg-light text-dark">{{ ip.descriptions_sensor }}</span>
   </a>
