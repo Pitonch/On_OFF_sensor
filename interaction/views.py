@@ -40,6 +40,14 @@ def ip_(request, ip_sensor):
     return render(request, "interaction/commands.html", {'ip_sensor': ip_sensor})
 
 
+def sensor_(request, ip_sensor, status):
+    sensor = Sensor.objects.get(ip_sensor=ip_sensor)
+    sensor.status = status
+    sensor.save(update_fields=["status"])
+    print('status:', sensor_)
+    return render(request, "interaction/commands.html", {'status': status})
+
+
 def sensor_on_off(request, ip_sensor, status):
     print('START')
     print(ip_sensor)
@@ -52,9 +60,9 @@ def sensor_on_off(request, ip_sensor, status):
     switch.raise_for_status()
     result = switch.json()
     print('result:', result)
-    return redirect('/interaction/commands/' + ip_sensor, JsonResponse(result))
+    # return redirect('/interaction/commands/' + ip_sensor, JsonResponse(result))
     #доработать через ajax
-    # return redirect('/interaction/', JsonResponse(result))
+    return JsonResponse(result)
 
 
 
