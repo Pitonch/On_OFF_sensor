@@ -23,7 +23,7 @@ class Sensor(models.Model):
     name_sensor = models.CharField(max_length=100)
     descriptions_sensor = models.CharField(max_length=100)
     location = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, related_name='location')
-    status = models.CharField(max_length=5)
+    status_sensor = models.CharField(max_length=5)
 
     # def __str__(self):
     #     return self.name_sensor

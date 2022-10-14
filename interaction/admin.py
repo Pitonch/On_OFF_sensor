@@ -22,7 +22,7 @@ class HomeAdmin(admin.ModelAdmin):
 
 @admin.register(Sensor)
 class HomeAdmin(admin.ModelAdmin):
-    list_display = ('ip_sensor', 'status', 'name_sensor', 'descriptions_sensor', 'location', 'home_name',)
+    list_display = ('ip_sensor', 'status_sensor', 'name_sensor', 'descriptions_sensor', 'location', 'home_name',)
     ordering = ('name_sensor',)
     search_fields = ('name_sensor',)
     list_filter = ('name_sensor', 'location',)

@@ -11,7 +11,7 @@
 {% block content %}
 
    <div class="form-group">
-   <label for="title" >{{ ip_sensor }} {{ status }}</label>
+   <label for="title" >{{ ip_sensor }}</label>
 
 
 <div class="cotainer">
@@ -22,14 +22,13 @@
 </form>
 
 
-<form action="{% url 'status_On_Off' ip_sensor 'off'%}" method="POST">
+<form action="{% url 'status_On_Off' ip_sensor 'off' %}" method="POST">
 {% csrf_token %}
 {#    <button type="submit" class="btn btn-danger">OFF</button>#}
 <button type="submit" id = 'click_OFF' class="btn btn-danger" onclick="off">OFF</button>
 
 </form>
 </div>
-
 
 
 {% endblock %}

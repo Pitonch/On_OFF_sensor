@@ -9,9 +9,8 @@ urlpatterns = [
     path('about/', interaction_views.about, name='url_to_about'),
     path('settings/', interaction_views.settings, name='url_to_settings'),
     path('allsensors/', interaction_views.show_sensors, name='all_sensors'),
-    path('commands/', interaction_views.commands, name='url_to_commands'),
     path('commands/<ip_sensor>', interaction_views.ip_, name='ip_sensor'),
-    path('commands/<ip_sensor>/<status>', interaction_views.sensor_on_off, name='status_On_Off'),
+    path('commands/<ip_sensor>/<status_sensor>', interaction_views.sensor_on_off, name='status_On_Off'),
     # path('commands/<status>', interaction_views.sensor_on_off, name='status'),
 
     # path('settings/create/', interaction_views.create),

@@ -13,10 +13,10 @@
     {% for ip in  all_ip_sensors %}
         <div class="list-group">
   <a href="{% url 'ip_sensor' ip.ip_sensor %}" class="list-group-item list-group-item-action ">{{ ip.ip_sensor }}
-      {% if ip.status == 'on' %}
-        <span class="badge bg-light text-dark btn btn-success">{{ ip.status }}</span>
+      {% if ip.status_sensor == 'on' %}
+        <span class="badge bg-light text-dark btn btn-success">{{ ip.status_sensor }}</span>
       {% else %}
-          <span class="badge bg-light text-dark btn btn-danger">{{ ip.status }}</span>
+          <span class="badge bg-light text-dark btn btn-danger">{{ ip.status_sensor }}</span>
       {% endif %}
         <span class="badge bg-light text-dark">{{ ip.descriptions_sensor }}</span>
   </a>
