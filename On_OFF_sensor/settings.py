@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'interaction',
     'django_celery_beat',
+    'crispy_forms',
+    'users.apps.UsersConfig'
 
 ]
 
@@ -232,3 +234,7 @@ CKEDITOR_CONFIGS = {
         ]),
     }
 }
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+LOGIN_REDIRECT_URL = '/interaction/allsensors/'
+LOGIN_URL = 'login'

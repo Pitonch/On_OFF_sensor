@@ -1,9 +1,7 @@
 import requests
 from django.shortcuts import render, redirect
 from .models import Sensor
-from django.http import JsonResponse, HttpResponse
-from interaction import models
-from django.http import HttpResponseRedirect, HttpResponseNotFound
+from django.http import JsonResponse
 
 
 def home(request):
@@ -63,6 +61,10 @@ def sensor_on_off(request, ip_sensor, status_sensor):
     return redirect('/interaction/commands/' + ip_sensor, JsonResponse(result))
     #доработать через ajax
     # return JsonResponse(result)
+
+
+
+
 
 
 

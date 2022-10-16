@@ -7,6 +7,14 @@
 {#  <script src="/js/ajax.js"></script>#}
     <script src="{% static 'js/ajax.js' %}"></script>
 
+{% if messages %}
+        	{% for message in messages %}
+          	<div class="alert alert-{{ message.tags }}">
+            	{{ message }}
+          	</div>
+        	{% endfor %}
+{% endif %}
+
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -37,6 +45,21 @@
 
             <li class="nav-item active">
                 <a class="nav-link" href="{% url 'all_sensors' %}">All sensors</a>
+
+
+            {% if user.is_authenticated %}
+                <li class="nav-item active">
+            	<a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+                <li class="nav-item active">
+            	<a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+          	{% else %}
+                <li class="nav-item active">
+            	<a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                <li class="nav-item active">
+            	<a class="nav-item nav-link" href="{% url 'register' %}">Registration</a>
+          	{% endif %}
+
+
 
 {#            <li class="nav-item active">#}
 {#                <a class="nav-link" href="{% url 'url_to_commands' %}">Commands</a>#}
