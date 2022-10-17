@@ -1,7 +1,8 @@
 import requests
 from django.shortcuts import render, redirect
-from .models import Sensor
-from django.http import JsonResponse
+from .models import Sensor, Location
+from django.http import JsonResponse, HttpResponseRedirect
+from django.contrib.auth.models import User
 
 
 def home(request):
@@ -61,6 +62,39 @@ def sensor_on_off(request, ip_sensor, status_sensor):
     return redirect('/interaction/commands/' + ip_sensor, JsonResponse(result))
     #доработать через ajax
     # return JsonResponse(result)
+
+
+# получение данных из бд
+def index(request):
+    # фильтрация
+    user = User.objects.all()
+    return render(request, "interaction/index.html", {"user": user})
+
+
+# добавление данных в бд
+def create(request):
+    initialize()
+    # если запрос POST, сохраняем данные
+    if request.method == "POST":
+        user = User()
+        user.name = request.POST.get("name")
+        location_ids = request.POST.getlist("location")
+        user.save()
+        # получаем все выбранные курсы по их id
+        location = Location.objects.filter(id__in=location_ids)
+        user.location_set.set(location, through_defaults={"mark": 0})
+        return HttpResponseRedirect("/")
+    # передаем данные в шаблон
+    location = Location.objects.all()
+    return render(request, "interaction/create.html", {"location": location})
+
+
+def initialize():
+    # Student.objects.all().delete()
+    # Course.objects.all().delete()
+    if Location.objects.all().count() == 0:
+        Location.objects.create(name="room1")
+
 
 
 
