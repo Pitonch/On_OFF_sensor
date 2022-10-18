@@ -10,6 +10,7 @@
 
    </div>
 <a  class="list-group-item list-group-item-action active">Список всех датчиков</a>
+    {% if user.is_superuser %}
     {% for ip in  all_ip_sensors %}
         <div class="list-group">
   <a href="{% url 'ip_sensor' ip.ip_sensor %}" class="list-group-item list-group-item-action ">{{ ip.ip_sensor }}
@@ -19,12 +20,17 @@
           <span class="badge bg-light text-dark btn btn-danger">{{ ip.status_sensor }}</span>
       {% endif %}
         <span class="badge bg-light text-dark">{{ ip.descriptions_sensor }}</span>
+        <span class="badge bg-light text-dark">{{ ip.location }}</span>
+
   </a>
-
-
 </div>
-
     {% endfor %}
+
+    {% else %}
+
+         вы не имеете доступа к этой странице, перейдите на <a href="{% url 'guest_location'  %}" class="link-primary">Ваши датчики</a>
+
+    {% endif %}
 
 
 {% endblock %}

@@ -236,5 +236,5 @@ CKEDITOR_CONFIGS = {
 }
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = '/interaction/allsensors/'
+LOGIN_REDIRECT_URL = '/interaction/profile/'
 LOGIN_URL = 'login'

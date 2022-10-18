@@ -60,15 +60,15 @@ def sensor_on_off(request, ip_sensor, status_sensor):
     result = switch.json()
     print('result:', result)
     return redirect('/interaction/commands/' + ip_sensor, JsonResponse(result))
-    #доработать через ajax
+    # доработать через ajax
     # return JsonResponse(result)
 
 
 # получение данных из бд
 def index(request):
     # фильтрация
-    user = User.objects.all()
-    return render(request, "interaction/index.html", {"user": user})
+    guest = User.objects.all()
+    return render(request, "interaction/index.html", {"guest": guest})
 
 
 # добавление данных в бд
@@ -76,13 +76,13 @@ def create(request):
     initialize()
     # если запрос POST, сохраняем данные
     if request.method == "POST":
-        user = User()
-        user.name = request.POST.get("name")
+        guest = User()
+        guest.name = request.POST.get("name")
         location_ids = request.POST.getlist("location")
-        user.save()
+        guest.save()
         # получаем все выбранные курсы по их id
         location = Location.objects.filter(id__in=location_ids)
-        user.location_set.set(location, through_defaults={"mark": 0})
+        guest.location.set(location, through_defaults={"mark": 0})
         return HttpResponseRedirect("/")
     # передаем данные в шаблон
     location = Location.objects.all()
@@ -94,83 +94,26 @@ def initialize():
     # Course.objects.all().delete()
     if Location.objects.all().count() == 0:
         Location.objects.create(name="room1")
+        Location.objects.create(name="room2")
+        Location.objects.create(name="room3")
 
 
+def show_guest(request):
+    all_guest = User.objects.all()
+    print(all_guest)
+    return render(request, "interaction/showguest.html", {'all_guest': all_guest})
 
 
+# функция вывода постов для определенного гостя
 
 
+def show_guest_location(request):
+    # создается список из имен доступных для пользователя зон
+    available_locations = []
+    for location in Location.objects.filter(guest=request.user):
+        available_locations.append(location.name_location)
 
+    # Фильтруем датчики так, чтобы выбрать только те, которые находятся в этих зонах
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#записm IP и room in On_OFF_sensor_db
-# получение данных из бд
-
-
-# def index(request):
-#     #много сенсоров
-#     sensors = OnOffSensor.objects.all()
-#     return render(request, "interaction/settings.html", {"sensors": sensors})
-#
-#
-# # сохранение данных в бд создание 1 сенсора
-# def create(request):
-#     if request.method == "POST":
-#         sensor = OnOffSensor()
-#         sensor.ip = request.POST.get("ip")
-#         sensor.room = request.POST.get("room")
-#         sensor.save()
-#     return HttpResponseRedirect("/")
-#
-#
-# # изменение данных в бд
-# def edit(request, sensor_id):
-#     try:
-#         sensor = OnOffSensor.objects.get(id=sensor_id)
-#
-#         if request.method == "POST":
-#             sensor.ip = request.POST.get("ip")
-#             sensor.room = request.POST.get("room")
-#             sensor.save()
-#             return HttpResponseRedirect("/")
-#         else:
-#             return render(request, "interaction/edit_settings.html", {"sensor": sensor})
-#     except OnOffSensor.DoesNotExist:
-#         return HttpResponseNotFound("<h2>Sensor not found</h2>")
-#
-#
-# # удаление данных из бд
-# def delete(request, sensor_id):
-#     try:
-#         sensor = OnOffSensor.objects.get(id=sensor_id)
-#         sensor.delete()
-#         return HttpResponseRedirect("/")
-#     except OnOffSensor.DoesNotExist:
-#         return HttpResponseNotFound("<h2>Sensor not found</h2>")
-#
-#
-
-
-
-
-
+    available_sensor = Sensor.objects.filter(location__name_location__in=available_locations)
+    return render(request, "interaction/show_guest_location.html", {'available_sensor': available_sensor})

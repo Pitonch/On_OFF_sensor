@@ -1,0 +1,29 @@
+{% extends 'interaction/base.html' %}
+
+{% block title %} Commands {% endblock %}
+
+{%  load static %}
+
+{% block content %}
+
+   <div class="form-group">
+
+   </div>
+<a  class="list-group-item list-group-item-action active">List of your sensors</a>
+    {% for sensors in available_sensor %}
+        <div class="list-group">
+{#        {{ sensors.ip_sensor }} | {{ sensors.descriptions_sensor }} in {{ sensors.name_sensor }}#}
+  <a href="{% url 'ip_sensor' sensors.ip_sensor %}" class="list-group-item list-group-item-action ">{{ sensors.ip_sensor }}
+      {% if sensors.status_sensor == 'on' %}
+        <span class="badge bg-light text-dark btn btn-success">{{ sensors.status_sensor }}</span>
+      {% else %}
+          <span class="badge bg-light text-dark btn btn-danger">{{ sensors.status_sensor }}</span>
+      {% endif %}
+        <span class="badge bg-light text-dark">{{ sensors.descriptions_sensor }}</span>
+        <span class="badge bg-light text-dark">{{ sensors.location }}</span>
+
+  </a>
+</div>
+    {% endfor %}
+
+{% endblock %}

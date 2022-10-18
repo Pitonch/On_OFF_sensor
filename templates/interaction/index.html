@@ -1,10 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'interaction/base.html' %}
 
+{% block title %} Add guest {% endblock %}
+
+{%  load static %}
+
+{% block content %}
+<body>
+    <h2>список гостей</h2>
+    <a href="create/">добавление гостя</a>
+    <table>
+        <thead><th>Имя гостя</th><th>локация</th></thead>
+        {% for guest in user %}
+        <tr>
+            <td>{{ guest.name }}</td>
+            <td>
+                {% for location in guest.location.all %}
+                    {{guest.name}}
+                {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
 </body>
-</html>
+{% endblock %}

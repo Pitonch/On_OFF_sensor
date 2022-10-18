@@ -14,7 +14,7 @@ class Location(models.Model):
     name_location = models.CharField(max_length=100)
     descriptions_location = models.CharField(max_length=100)
     home = models.ForeignKey(Home, on_delete=models.SET_NULL, null=True, related_name='home')
-    users = models.ManyToManyField(User)
+    guest = models.ManyToManyField(User)
 
     def __str__(self):
         return self.name_location
