@@ -6,31 +6,71 @@
 
 {% block content %}
 
-   <div class="form-group">
+    <br><br>
+    <a  class="list-group-item list-group-item-action active text-light">Список всех датчиков</a>
 
-   </div>
-<a  class="list-group-item list-group-item-action active">Список всех датчиков</a>
-    {% if user.is_superuser %}
-    {% for ip in  all_ip_sensors %}
-        <div class="list-group">
-  <a href="{% url 'ip_sensor' ip.ip_sensor %}" class="list-group-item list-group-item-action ">{{ ip.ip_sensor }}
-      {% if ip.status_sensor == 'on' %}
-        <span class="badge bg-light text-dark btn btn-success">{{ ip.status_sensor }}</span>
-      {% else %}
-          <span class="badge bg-light text-dark btn btn-danger">{{ ip.status_sensor }}</span>
-      {% endif %}
-        <span class="badge bg-light text-dark">{{ ip.descriptions_sensor }}</span>
-        <span class="badge bg-light text-dark">{{ ip.location }}</span>
+    <table class="table table-striped"  style="text-align: center">
+      <thead style="text-align: center">
+        <tr>
 
-  </a>
-</div>
-    {% endfor %}
+          <th scope="col">
+            <svg style="margin-right: 5px;" xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="#007bff" class="bi bi-house-fill" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"></path>
+              <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"></path>
+            </svg>
+              Местоположение</th>
 
-    {% else %}
+          <th scope="col">
+              <svg style="margin-right: 5px;" xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="#007bff" class="bi bi-pin-map-fill" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M3.1 11.2a.5.5 0 0 1 .4-.2H6a.5.5 0 0 1 0 1H3.75L1.5 15h13l-2.25-3H10a.5.5 0 0 1 0-1h2.5a.5.5 0 0 1 .4.2l3 4a.5.5 0 0 1-.4.8H.5a.5.5 0 0 1-.4-.8l3-4z"></path>
+                <path fill-rule="evenodd" d="M4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999z"></path>
+              </svg>
+              Комната</th>
 
-         вы не имеете доступа к этой странице, перейдите на <a href="{% url 'guest_location'  %}" class="link-primary">Ваши датчики</a>
+          <th scope="col">IP</th>
 
-    {% endif %}
+          <th scope="col">Статус</th>
 
+          <th scope="col">
+              <svg style="margin-right: 5px;" xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="#007bff" class="bi bi-clipboard2" viewBox="0 0 16 16">
+                <path d="M3.5 2a.5.5 0 0 0-.5.5v12a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-12a.5.5 0 0 0-.5-.5H12a.5.5 0 0 1 0-1h.5A1.5 1.5 0 0 1 14 2.5v12a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-12A1.5 1.5 0 0 1 3.5 1H4a.5.5 0 0 1 0 1h-.5Z"></path>
+                <path d="M10 .5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5.5.5 0 0 1-.5.5.5.5 0 0 0-.5.5V2a.5.5 0 0 0 .5.5h5A.5.5 0 0 0 11 2v-.5a.5.5 0 0 0-.5-.5.5.5 0 0 1-.5-.5Z"></path>
+              </svg>
+              Описание</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for ip in all_ip_sensors %}
+            <tr>
+                <td>
+                    <span class=" text-dark">{{ ip.location.home.name_home }}</span>
+                </td>
+
+                <td>
+                    <span class=" text-dark">{{ ip.location }}</span>
+                </td>
+
+                <td>
+                    <a href="{% url 'ip_sensor' ip.ip_sensor %}" class="list-group-item list-group-item-action">
+                    {{ ip.ip_sensor }}
+                    </a>
+                </td>
+
+                <td>
+                  <span class="text-light btn {% if ip.status_sensor == 'on' %}btn-success
+                                                            {% else %}btn-danger
+                                                            {% endif %}">
+                      {{ ip.status_sensor }}
+                  </span>
+                </td>
+
+                <td>
+                    {{ ip.descriptions_sensor }}
+                </td>
+            </tr>
+        {% endfor %}
+      </tbody>
+    </table>
 
 {% endblock %}
