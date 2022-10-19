@@ -21,6 +21,7 @@ urlpatterns = [
     path('index/', interaction_views.index),
     path('showguest/', interaction_views.show_guest, name='show_guest'),
     path('guestlocation/', interaction_views.show_guest_location, name='guest_location'),
+    path('sensor_ping/', interaction_views.sensor_ping, name='sensor_ping'),
 
 
 

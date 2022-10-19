@@ -4,6 +4,7 @@ from .models import Sensor, Location
 from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+import urllib3
 
 
 def home(request):
@@ -118,3 +119,12 @@ def show_guest_location(request):
 
     available_sensor = Sensor.objects.filter(location__name_location__in=available_locations)
     return render(request, "interaction/show_guest_location.html", {'available_sensor': available_sensor})
+
+
+#опрос датчика
+def sensor_ping(request):
+    http = urllib3.PoolManager()
+    url_sensor = 'http://192.168.0.89/cm?cmnd=Status0'
+    response = http.request('GET', url_sensor)
+    print(response.status)
+    return response.status

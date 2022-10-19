@@ -10,7 +10,7 @@
 
    </div>
 <a  class="list-group-item list-group-item-action active">List of your sensors</a>
-    {% if user.is_authenticated %}
+    {% if user.is_authenticated%}
     {% for sensors in available_sensor %}
         <div class="list-group">
 {#        {{ sensors.ip_sensor }} | {{ sensors.descriptions_sensor }} in {{ sensors.name_sensor }}#}
@@ -22,10 +22,10 @@
       {% endif %}
         <span class="badge bg-light text-dark">{{ sensors.descriptions_sensor }}</span>
         <span class="badge bg-light text-dark">{{ sensors.location }}</span>
+
   </a>
 </div>
     {% endfor %}
-
     {% endif %}
 
 {% endblock %}
