@@ -68,7 +68,7 @@
             	<a class="nav-item nav-link" href="{% url 'register' %}">Registration</a>
           	{% endif %}
 
-            {% if not user.is_superuser %}
+            {% if not user.is_superuser and user.is_authenticated%}
             <li class="nav-item active">
                 <a class="nav-link" href="{% url 'guest_location' %}">Your locations & sensors</a>
                 {% endif %}

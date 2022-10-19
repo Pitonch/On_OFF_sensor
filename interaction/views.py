@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from .models import Sensor, Location
 from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 
 def home(request):
@@ -106,7 +107,7 @@ def show_guest(request):
 
 # функция вывода постов для определенного гостя
 
-
+@login_required
 def show_guest_location(request):
     # создается список из имен доступных для пользователя зон
     available_locations = []
