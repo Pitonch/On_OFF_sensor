@@ -12,11 +12,11 @@ def home(request):
     # print(request.user)
     return render(request, 'interaction/base.html')
 
-
+@login_required
 def about(request):
     return render(request, 'interaction/about.html', {'content': '<h1>About</h1>'})
 
-
+@login_required
 def settings(request):
     return render(request, 'interaction/settings.html', {'content': '<h1>Settings On_OFF_sensor</h1>'})
 
@@ -31,7 +31,7 @@ def next_pages(request):
 
 # вывод всех датчиков
 
-
+@login_required
 def show_sensors(request):
     # создается список из имен доступных для пользователя зон
     if request.user.is_superuser:

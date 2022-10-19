@@ -50,10 +50,6 @@
             <li class="nav-item active">
                 <a class="nav-link" href="{% url 'url_to_settings' %}">Settings</a>
 
-
-
-
-
             {% if user.is_authenticated %}
                 <li class="nav-item active">
             	<a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
@@ -66,18 +62,10 @@
             	<a class="nav-item nav-link" href="{% url 'register' %}">Registration</a>
           	{% endif %}
 
-{#            {% if not user.is_superuser and user.is_authenticated%}#}
-{#            <li class="nav-item active">#}
-{#                <a class="nav-link" href="{% url 'guest_location' %}">Your locations & sensors</a>#}
-{#                {% endif %}#}
                  <li class="nav-item active">
                 <a class="nav-link" href="{% url 'all_sensors' %}">Your locations & sensors</a>
 
-
-
-
         </li>
-
             </ul>
         </div>
     </nav>
