@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 
+
 def home(request):
     # print(request.user)
     return render(request, 'interaction/base.html')
@@ -69,28 +70,33 @@ def sensor_on_off(request, ip_sensor, status_sensor):
         sensor = get_object_or_404(Sensor, ip_sensor=ip_sensor)
 
         sensor.status_sensor = status_sensor
+
         sensor.save(update_fields=["status_sensor"])
 
         switch = requests.post('http://' + ip_sensor + f'/cm?cmnd=Power%20{status_sensor}')
-        print(switch)
-        print('status:', status_sensor)
+        print('switch:', switch)
+        print('status_sensor:', status_sensor)
         switch.raise_for_status()
         result = switch.json()
         print('result:', result)
         # return redirect('/interaction/commands/' + ip_sensor, JsonResponse(result))
         # доработать через ajax
-
         return JsonResponse(result)
     else:
-        # Датчик надоступен по пингу
+        # Датчик надоступен по пингу записываем его статус в базу данных
+        sensor = Sensor.objects.get(ip_sensor=ip_sensor)
+        print('sensor:', sensor)
+        sensor.status_sensor = 'down'
+        print(print('status without ping:', sensor.status_sensor))
+        sensor.save(update_fields=["status_sensor"])
         return JsonResponse({'status': 'down'})
 
 
-# получение данных из бд
-def index(request):
-    # фильтрация
-    guest = User.objects.all()
-    return render(request, "interaction/index.html", {"guest": guest})
+# # получение данных из бд
+# def index(request):
+#     # фильтрация
+#     guest = User.objects.all()
+#     return render(request, "interaction/index.html", {"guest": guest})
 
 
 # добавление данных в бд
@@ -111,19 +117,19 @@ def index(request):
 #     return render(request, "interaction/create.html", {"location": location})
 
 
-def initialize():
-    # Student.objects.all().delete()
-    # Course.objects.all().delete()
-    if Location.objects.all().count() == 0:
-        Location.objects.create(name="room1")
-        Location.objects.create(name="room2")
-        Location.objects.create(name="room3")
+# def initialize():
+#     # Student.objects.all().delete()
+#     # Course.objects.all().delete()
+#     if Location.objects.all().count() == 0:
+#         Location.objects.create(name="room1")
+#         Location.objects.create(name="room2")
+#         Location.objects.create(name="room3")
 
 
-def show_guest(request):
-    all_guest = User.objects.all()
-    print(all_guest)
-    return render(request, "interaction/showguest.html", {'all_guest': all_guest})
+# def show_guest(request):
+#     all_guest = User.objects.all()
+#     print(all_guest)
+#     return render(request, "interaction/showguest.html", {'all_guest': all_guest})
 
 
 # функция вывода постов для определенного гостя
