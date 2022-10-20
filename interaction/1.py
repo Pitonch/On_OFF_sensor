@@ -37,14 +37,17 @@ def ping_sensor(ip_sensor, status_sensor):
         sensor = get_object_or_404(Sensor, ip_sensor=ip_sensor)
         sensor.status_sensor = status_sensor
         sensor.save(update_fields=["status_sensor"])
-        return True
+        return 'sensor online ping'
 
     else:
         # Датчик надоступен по пингу записываем его статус в базу данных
         sensor = Sensor.objects.get(ip_sensor=ip_sensor)
         sensor.status_sensor = 'down'
         sensor.save(update_fields=["status_sensor"])
-        return False
+        return 'sensor offline ping'
+
+
+print(ping_sensor())
 
 
 

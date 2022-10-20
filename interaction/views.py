@@ -6,7 +6,7 @@ from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
-from .tasks import ping_sensor
+
 
 
 def home(request):
@@ -69,9 +69,7 @@ def sensor_on_off(request, ip_sensor, status_sensor):
 
         # Если нет датчика, то вернется код 404
         sensor = get_object_or_404(Sensor, ip_sensor=ip_sensor)
-
         sensor.status_sensor = status_sensor
-
         sensor.save(update_fields=["status_sensor"])
 
         switch = requests.post('http://' + ip_sensor + f'/cm?cmnd=Power%20{status_sensor}')
@@ -82,7 +80,7 @@ def sensor_on_off(request, ip_sensor, status_sensor):
         print('result:', result)
         # return redirect('/interaction/commands/' + ip_sensor, JsonResponse(result))
         # доработать через ajax
-        ping_sensor.delay()
+        # ping_sensor.delay()
         # return JsonResponse(result)
         return redirect('/interaction/allsensors/', JsonResponse(result))
     else:
@@ -158,3 +156,6 @@ def show_guest_location(request):
 #     response = http.request('GET', url_sensor)
 #     print(response.status)
 #     return response.status
+
+
+

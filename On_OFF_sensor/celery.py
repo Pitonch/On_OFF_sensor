@@ -10,6 +10,6 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'каждую минуту': {
         'task': 'interaction.tasks.ping_sensor',
-        'schedule': crontab(),
+        'schedule': 10,
     },
 }
