@@ -1,6 +1,13 @@
-import requests as requests
-import urllib3
 from ping3 import ping
+import requests
+from django.shortcuts import render, redirect
+from .models import Sensor
+from django.http import JsonResponse, HttpResponseRedirect
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
+from .tasks import ping_sensor
+
 
 
 # http = urllib3.PoolManager()
@@ -14,20 +21,32 @@ from ping3 import ping
 # except TimeoutError:
 #     print('sensor offline')
 
-ip_sensor = '192.168.0.87'
-if ping(ip_sensor, timeout=1):
-    print('sensor online ping')
-else:
-    print('sensor offline ping')
-
-
-
-
-
-
-
-# pprint(resp.data.decode('utf-8'))
+# def ping_sensor():
+#     ip_sensor = '192.168.0.89'
+#     if ping(ip_sensor, timeout=1):
+#         return 'sensor online ping'
+#     else:
+#         return 'sensor offline ping'
 #
-#
-# resp = http.request('HEAD', url)
-# pprint(resp.headers['Content-Type'])
+# print(ping_sensor())
+
+
+def ping_sensor(ip_sensor, status_sensor):
+    # Проверка доступности датчика
+    if ping(ip_sensor):
+        sensor = get_object_or_404(Sensor, ip_sensor=ip_sensor)
+        sensor.status_sensor = status_sensor
+        sensor.save(update_fields=["status_sensor"])
+        return True
+
+    else:
+        # Датчик надоступен по пингу записываем его статус в базу данных
+        sensor = Sensor.objects.get(ip_sensor=ip_sensor)
+        sensor.status_sensor = 'down'
+        sensor.save(update_fields=["status_sensor"])
+        return False
+
+
+
+
+
