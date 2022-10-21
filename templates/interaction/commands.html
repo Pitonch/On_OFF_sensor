@@ -15,14 +15,14 @@
 
 
 <div class="cotainer">
-<form action="{% url 'status_On_Off' ip_sensor 'on' %}" method="POST">
+<form action="{% url 'status_On_Off' ip_sensor 'ON' %}" method="POST">
 {% csrf_token %}
 {#    <button type="submit" class="btn btn-success">On</button>#}
 <button type="submit" id = 'click_ON' class="btn btn-success" onclick="on">On</button>
 </form>
 
 
-<form action="{% url 'status_On_Off' ip_sensor 'off' %}" method="POST">
+<form action="{% url 'status_On_Off' ip_sensor 'OFF' %}" method="POST">
 {% csrf_token %}
 {#    <button type="submit" class="btn btn-danger">OFF</button>#}
 <button type="submit" id = 'click_OFF' class="btn btn-danger" onclick="off">OFF</button>

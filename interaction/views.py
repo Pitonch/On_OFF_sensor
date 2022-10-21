@@ -6,6 +6,7 @@ from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
+import urllib3
 
 
 
@@ -148,11 +149,12 @@ def show_guest_location(request):
     return render(request, "interaction/show_guest_location.html", {'available_sensor': available_sensor})
 
 
-#опрос датчика
-# def sensor_ping(request):
+# получение данных от датчика из json
+# def sensor_get_information(request):
 #     http = urllib3.PoolManager()
-#     url_sensor = 'http://192.168.0.89/cm?cmnd=Status0'
+#     url_sensor = 'http://192.168.0.89/cm?cmnd=Status1'
 #     response = http.request('GET', url_sensor)
+#
 #     print(response.status)
 #     return response.status
 
