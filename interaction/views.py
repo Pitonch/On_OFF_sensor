@@ -86,9 +86,8 @@ def sensor_on_off(request, ip_sensor, status_sensor):
     else:
         # Датчик надоступен по пингу записываем его статус в базу данных
         sensor = Sensor.objects.get(ip_sensor=ip_sensor)
-        print('sensor:', sensor)
         sensor.status_sensor = 'down'
-        print(print('status without ping:', sensor.status_sensor))
+        print('status without ping:', sensor.status_sensor)
         sensor.save(update_fields=["status_sensor"])
         # return JsonResponse({'status': 'down'})
         return redirect('/interaction/allsensors/', JsonResponse({'status': 'down'}))
@@ -157,5 +156,21 @@ def show_guest_location(request):
 #     print(response.status)
 #     return response.status
 
+
+# def ping_sensor(request, ip_sensor, status_sensor):
+#     print('START ping')
+#     # Проверка доступности датчика
+#     if ping(ip_sensor):
+#         sensor = Sensor.objects.get(ip_sensor=ip_sensor)
+#         sensor.status_sensor = status_sensor
+#         sensor.save(update_fields=["status_sensor"])
+#         data = {'ip_sensor': ip_sensor, 'status_sensor': status_sensor}
+#         return render(request, "interaction/ping.html", context=data)
+#     else:
+#         sensor = Sensor.objects.get(ip_sensor=ip_sensor)
+#         sensor.status_sensor = 'down'
+#         print('status without ping:', sensor.status_sensor)
+#         sensor.save(update_fields=["status_sensor"])
+#         return render(request, "interaction/ping.html", sensor.status_sensor)
 
 

@@ -30,21 +30,19 @@ from .tasks import ping_sensor
 #
 # print(ping_sensor())
 
-
-def ping_sensor(ip_sensor, status_sensor):
+def ping_sensor(request, ip_sensor, status_sensor):
     # Проверка доступности датчика
-    if ping(ip_sensor):
-        sensor = get_object_or_404(Sensor, ip_sensor=ip_sensor)
-        sensor.status_sensor = status_sensor
-        sensor.save(update_fields=["status_sensor"])
-        return 'sensor online ping'
+    sensor = get_object_or_404(Sensor, ip_sensor=ip_sensor)
+    sensor.status_sensor = status_sensor
+    sensor.save(update_fields=["status_sensor"])
+    return 'sensor online ping'
 
-    else:
-        # Датчик надоступен по пингу записываем его статус в базу данных
-        sensor = Sensor.objects.get(ip_sensor=ip_sensor)
-        sensor.status_sensor = 'down'
-        sensor.save(update_fields=["status_sensor"])
-        return 'sensor offline ping'
+    # else:
+    #     # Датчик надоступен по пингу записываем его статус в базу данных
+    #     sensor = Sensor.objects.get(ip_sensor=ip_sensor)
+    #     sensor.status_sensor = 'down'
+    #     sensor.save(update_fields=["status_sensor"])
+    #     return 'sensor offline ping'
 
 
 print(ping_sensor())

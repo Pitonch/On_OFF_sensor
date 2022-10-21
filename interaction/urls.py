@@ -22,6 +22,8 @@ urlpatterns = [
     # path('showguest/', interaction_views.show_guest, name='show_guest'),
     # path('guestlocation/', interaction_views.show_guest_location, name='guest_location'),
     #path('sensor_ping/', interaction_views.sensor_ping, name='sensor_ping'),
+    # path('pingsensor/<ip_sensor>/<status_sensor>', interaction_views.ping_sensor, name='ping_sensor'),
+
 
 
 

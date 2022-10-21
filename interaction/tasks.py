@@ -7,27 +7,29 @@ from django.http import JsonResponse
 
 
 @app.task
-def ping_sensor(ip_sensor, status_sensor):
+def ping_sensor():
     # Проверка доступности датчика
-    if ping(ip_sensor):
-        for sensor in Sensor.objects.all():
-            # sensor = get_object_or_404(Sensor, ip_sensor=ip_sensor)
-            sensor.status_sensor = status_sensor
-            sensor.save(update_fields=["status_sensor"])
-            return ip_sensor
+    for sensor in Sensor.objects.all(): #для всех датчиков в Sensor
+        if ping(sensor.ip_sensor): #если датчик пинг
+            sensor = Sensor.objects.get(ip_sensor=sensor.ip_sensor) #находим датчик по ip
+            # sensor.status_sensor = sensor.status_sensor #получаем его статус
+            sensor.save(update_fields=["status_sensor"]) #записываем стату в базу данных
+            print(sensor.ip_sensor, '1:', sensor.status_sensor)
+
+        else: # Датчик не доступен по пингу
+            sensor = Sensor.objects.get(ip_sensor=sensor.ip_sensor) #находим датчик по ip
+            sensor.status_sensor = 'down' #присваиваем статус 'down'
+            sensor.save(update_fields=["status_sensor"]) #записываем стату в базу данных
+            print(sensor.ip_sensor, '2:', sensor.status_sensor)
+
+        print(sensor.ip_sensor, '3:', sensor.status_sensor)
 
 
-    else:
-        # Датчик надоступен по пингу записываем его статус в базу данных
-        sensor = Sensor.objects.get(ip_sensor=ip_sensor)
-        sensor.status_sensor = 'down'
-        sensor.save(update_fields=["status_sensor"])
 
 
 
 
-
-
+#
 # @app.task
 # def ping_sensor():
 #     ip_sensor = '192.168.0.89'
