@@ -50,8 +50,28 @@ def show_sensors(request):
 
 
 def ip_(request, ip_sensor):
-    data = {'ip_sensor': ip_sensor}
-    return render(request, "interaction/commands.html", context=data)
+    if ping(ip_sensor, timeout=1): #если датчик пинг таймер 1 cек
+        url = f'http://{ip_sensor}/cm?cmnd=Status'
+        print('url:', url)
+        response = requests.get(url) #получаем ответ
+        print(response)
+        sensor_dict = response.json() #переводим его в словарь
+        print('sensor_dict type:', type(sensor_dict))
+        print('sensor_dict:', sensor_dict)
+        data = {'ip_sensor': ip_sensor, 'sensor_dict': sensor_dict}
+        return render(request, "interaction/commands.html", context=data)
+    else:
+        sensor = Sensor.objects.get(ip_sensor=ip_sensor)
+        print('status_sensor:', sensor.status_sensor)
+        data = {'ip_sensor': ip_sensor, 'status_sensor': sensor.status_sensor}
+        return render(request, "interaction/commands.html", context=data)
+
+
+    # for key_sensor in sensor_dict["Status"]:
+    #     return key_sensor
+    # for value_sensor in sensor_dict["Status"]:
+    #     return value_sensor
+    # 'key_sensor': key_sensor, 'value_sensor': value_sensor
 
 
 # def sensor_(request, ip_sensor, status):
@@ -174,5 +194,24 @@ def show_guest_location(request):
 #         print('status without ping:', sensor.status_sensor)
 #         sensor.save(update_fields=["status_sensor"])
 #         return render(request, "interaction/ping.html", sensor.status_sensor)
+
+
+
+
+        # else: # Датчик не доступен по пингу
+        #     sensor.status_sensor = 'down' #присваиваем статус 'down'
+        #     print(('ip sensor + sensor status: 3', sensor.ip_sensor, sensor.status_sensor))
+        # sensor.save(update_fields=["status_sensor"])  # записываем стату в базу данных
+
+
+    #
+    # sensor = Sensor.objects.get(ip_sensor=ip_sensor)
+    # url = f'http://{ip_sensor}/cm?cmnd=Status0'
+    # r = requests.get(url)
+    # sensor_dict = r.json()
+    # # for key in sensor_dict["Status"]:
+    # #     print(key)
+    # for value in sensor_dict["Status"]:
+    #     print(value)
 
 

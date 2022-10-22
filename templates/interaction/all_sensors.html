@@ -59,8 +59,8 @@
 
                 <td>
                   <span class="text-light btn
-                    {% if ip.status_sensor == 'on' %}btn-success
-                    {% elif ip.status_sensor == 'off' %}btn-danger
+                    {% if ip.status_sensor == 'ON' %}btn-success
+                    {% elif ip.status_sensor == 'OFF' %}btn-danger
                     {% else %}btn-warning
                     {% endif %}">
                     {{ ip.status_sensor }}

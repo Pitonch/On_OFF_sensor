@@ -75,8 +75,34 @@ import requests
 
 r = requests.get("http://192.168.0.89/cm?cmnd=Status0")
 sensor_dict = r.json()
-print(sensor_dict["Status"]["Power"])
-a=sensor_dict["StatusSTS"]["POWER"]
+for key in sensor_dict["Status"]:
+    print(key)
+for value in sensor_dict["Status"]:
+    print(value)
+
+# print(sensor_dict["Status"]["Power"])
+# a=sensor_dict["StatusSTS"]["POWER"]
+# print(sensor_dict)
+# print(type(sensor_dict["Status"]))
+# for key in sensor_dict["Status"]:
+#     print(key)
+
+# def info_sensor(request):
+#     for sensor in Sensor.objects.all(): #для всех датчиков в Sensor
+#         sensor = Sensor.objects.get(ip_sensor=sensor.ip_sensor) #находим датчик по ip
+#         if ping(sensor.ip_sensor, timeout=1): #если датчик пинг таймер 1 cек
+#             url = f'http://{sensor.ip_sensor}/cm?cmnd=Status'
+#             response = requests.get(url) #получаем ответ
+#             print(response)
+#             sensor_dict = response.json() #переводим его в словарь
+#             for key_sensor in sensor_dict["Status"]:
+#                 print(key_sensor)
+#                 return render(request, "interaction/commands.html", {'key_sensor': key_sensor})
+#             for value_sensor in sensor_dict["Status"]:
+#                 return render(request, "interaction/commands.html", {'value_sensor': value_sensor})
+
+
+
 
 
 

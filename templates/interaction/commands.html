@@ -28,6 +28,36 @@
 <button type="submit" id = 'click_OFF' class="btn btn-danger" onclick="off">OFF</button>
 </form>
 
+     <div class="form-group">
+
+   <label for="title" >Table information of sensor  {{ ip_sensor }} {{ sensor_dict.Status.DeviceName }} </label>
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Value</th>
+      <th scope="col">Result</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% if status_sensor == 'down' %}
+      <tr>
+        <td>sensor down</td>
+        <td>sensor down</td>
+      </tr>
+  {% else %}
+    {% for key, value in sensor_dict.Status.items %}
+    <tr>
+      <td>{{ key }}</td>
+      <td>{{ value }}</td>
+      </tr>
+   {% endfor %}
+  {% endif %}
+
+
+  </tbody>
+</table>
 
 </div>
 
