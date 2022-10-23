@@ -9,35 +9,40 @@
 
 
 {% block content %}
+    <p>
 
    <div class="form-group">
-   <label for="title" >{{ ip_sensor }}</label>
+   <label for="title" >Управление датчиком: <strong>{{ ip_sensor }}</strong></label>
+   </div>
 
 
-<div class="cotainer">
+<div class="btn-group" >
 <form action="{% url 'status_On_Off' ip_sensor 'ON' %}" method="POST">
 {% csrf_token %}
 {#    <button type="submit" class="btn btn-success">On</button>#}
-<button type="submit" id = 'click_ON' class="btn btn-success" onclick="on">On</button>
+<button  type="submit" id = 'click_ON' class="btn btn-success" onclick="on">On</button>
 </form>
-
 
 <form action="{% url 'status_On_Off' ip_sensor 'OFF' %}" method="POST">
 {% csrf_token %}
 {#    <button type="submit" class="btn btn-danger">OFF</button>#}
-<button type="submit" id = 'click_OFF' class="btn btn-danger" onclick="off">OFF</button>
+<button  type="submit" id = 'click_OFF' class="btn btn-danger" onclick="off">OFF</button>
 </form>
+</div>
+</p>
+
 
      <div class="form-group">
 
-   <label for="title" >Table information of sensor  {{ ip_sensor }} {{ sensor_dict.Status.DeviceName }} </label>
+
+   <label for="title" >Таблица настроек датчика</b> </label>
 
 
 <table class="table">
   <thead>
     <tr>
-      <th scope="col">Value</th>
-      <th scope="col">Result</th>
+      <th scope="col">Параметр</th>
+      <th scope="col">Значение</th>
     </tr>
   </thead>
   <tbody>

@@ -18,9 +18,9 @@ def home(request):
 def about(request):
     return render(request, 'interaction/about.html', {'content': '<h1>About</h1>'})
 
-@login_required
-def settings(request):
-    return render(request, 'interaction/settings.html', {'content': '<h1>Settings On_OFF_sensor</h1>'})
+# @login_required
+# def settings(request):
+#     return render(request, 'interaction/settings.html', {'content': '<h1>Settings On_OFF_sensor</h1>'})
 
 
 def commands(request):
@@ -94,6 +94,7 @@ def sensor_on_off(request, ip_sensor, status_sensor):
         sensor.save(update_fields=["status_sensor"])
 
         switch = requests.post('http://' + ip_sensor + f'/cm?cmnd=Power%20{status_sensor}')
+        print('http://' + ip_sensor + f'/cm?cmnd=Power%20{status_sensor}')
         print('switch:', switch)
         print('status_sensor:', status_sensor)
         switch.raise_for_status()
@@ -156,17 +157,17 @@ def sensor_on_off(request, ip_sensor, status_sensor):
 
 # функция вывода постов для определенного гостя
 
-@login_required
-def show_guest_location(request):
-    # создается список из имен доступных для пользователя зон
-    available_locations = []
-    for location in Location.objects.filter(guest=request.user):
-        available_locations.append(location.name_location)
-
-    # Фильтруем датчики так, чтобы выбрать только те, которые находятся в этих зонах
-
-    available_sensor = Sensor.objects.filter(location__name_location__in=available_locations)
-    return render(request, "interaction/show_guest_location.html", {'available_sensor': available_sensor})
+# @login_required
+# def show_guest_location(request):
+#     # создается список из имен доступных для пользователя зон
+#     available_locations = []
+#     for location in Location.objects.filter(guest=request.user):
+#         available_locations.append(location.name_location)
+#
+#     # Фильтруем датчики так, чтобы выбрать только те, которые находятся в этих зонах
+#
+#     available_sensor = Sensor.objects.filter(location__name_location__in=available_locations)
+#     return render(request, "interaction/show_guest_location.html", {'available_sensor': available_sensor})
 
 
 # получение данных от датчика из json
