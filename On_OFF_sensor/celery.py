@@ -1,6 +1,6 @@
 from celery import Celery
 import os
-from celery.schedules import crontab
+
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'On_OFF_sensor.settings')
 app = Celery('On_OFF_sensor')

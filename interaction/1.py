@@ -71,12 +71,12 @@ if resp.status == 200:
 #
 # print(json.loads(r.data.decode('utf-8')))
 
-r = requests.get("http://192.168.0.89/cm?cmnd=Status0")
-sensor_dict = r.json()
-for key in sensor_dict["Status"]:
-    print(key)
-for value in sensor_dict["Status"]:
-    print(value)
+# r = requests.get("http://192.168.0.89/cm?cmnd=Status0")
+# sensor_dict = r.json()
+# for key in sensor_dict["Status"]:
+#     print(key)
+# for value in sensor_dict["Status"]:
+#     print(value)
 
 # print(sensor_dict["Status"]["Power"])
 # a=sensor_dict["StatusSTS"]["POWER"]

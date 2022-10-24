@@ -1,11 +1,6 @@
 from django.contrib import admin
-from .models import Home, Location, Sensor, Image
+from .models import Home, Location, Sensor
 
-
-
-# admin.site.register(Home)
-# admin.site.register(Location)
-# admin.site.register(Sensor)
 
 @admin.register(Home)
 class HomeAdmin(admin.ModelAdmin):
@@ -30,7 +25,4 @@ class HomeAdmin(admin.ModelAdmin):
 
     @admin.display(description='Дом')
     def home_name(self, obj: Sensor):
-        return obj.location.home.name_home  # Надо вот так
-
-
-admin.site.register(Image)
+        return obj.location.home.name_home

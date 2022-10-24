@@ -1,15 +1,12 @@
 from ping3 import ping
 import requests
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from .models import Sensor, Location, Image
-from django.http import JsonResponse, HttpResponseRedirect
-from django.contrib.auth.models import User
+from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
-import urllib3
+# import urllib3
 from django.shortcuts import render
-from .forms import ImageForm
-
 
 
 def home(request):
@@ -21,20 +18,8 @@ def about(request):
     data = Image.objects.all()
     return render(request, 'interaction/about.html', {'data': data})
 
-# @login_required
-# def settings(request):
-#     return render(request, 'interaction/settings.html', {'content': '<h1>Settings On_OFF_sensor</h1>'})
-
-
-def commands(request):
-    return render(request, 'interaction/commands.html', {'content': '<h1>Commands</h1>'})
-
-
-def next_pages(request):
-    return render(request, 'interaction/next.html', {'content': '<h1>next</h1>'})
-
-
 # вывод всех датчиков
+
 
 @login_required
 def show_sensors(request):
@@ -48,17 +33,18 @@ def show_sensors(request):
             available_locations.append(location.name_location)
         # Фильтруем датчики так, чтобы выбрать только те, которые находятся в этих зонах
         all_ip_sensors = Sensor.objects.filter(location__name_location__in=available_locations)
-
     return render(request, "interaction/all_sensors.html", {'all_ip_sensors': all_ip_sensors})
+
+# вывод ip датчика
 
 
 def ip_(request, ip_sensor):
-    if ping(ip_sensor, timeout=1): #если датчик пинг таймер 1 cек
+    if ping(ip_sensor, timeout=1):  # если датчик пинг таймер 1 cек
         url = f'http://{ip_sensor}/cm?cmnd=Status'
         print('url:', url)
-        response = requests.get(url) #получаем ответ
+        response = requests.get(url)  # получаем ответ
         print(response)
-        sensor_dict = response.json() #переводим его в словарь
+        sensor_dict = response.json()  # переводим его в словарь
         print('sensor_dict type:', type(sensor_dict))
         print('sensor_dict:', sensor_dict)
         data = {'ip_sensor': ip_sensor, 'sensor_dict': sensor_dict}
@@ -70,165 +56,23 @@ def ip_(request, ip_sensor):
         return render(request, "interaction/commands.html", context=data)
 
 
-    # for key_sensor in sensor_dict["Status"]:
-    #     return key_sensor
-    # for value_sensor in sensor_dict["Status"]:
-    #     return value_sensor
-    # 'key_sensor': key_sensor, 'value_sensor': value_sensor
-
-
-# def sensor_(request, ip_sensor, status):
-#     sensor = Sensor.objects.get(ip_sensor=ip_sensor)
-#     sensor.status = status
-#     print('status:', sensor_)
-#     return render(request, "interaction/commands_status.html", {'status': status})
-
+# функция управления сенсорами
 
 def sensor_on_off(request, ip_sensor, status_sensor):
-    print('START')
-    print(ip_sensor)
     # Проверка доступности датчика
-    if ping(ip_sensor):
-        # Если датчик пингуется
-
+    if ping(ip_sensor):  # Если датчик пингуется
         # Если нет датчика, то вернется код 404
         sensor = get_object_or_404(Sensor, ip_sensor=ip_sensor)
         sensor.status_sensor = status_sensor
-        sensor.save(update_fields=["status_sensor"])
-
+        sensor.save(update_fields=["status_sensor"])  # Обновляем поле в базе данных
+        # Отправляем запрос на датчик
         switch = requests.post('http://' + ip_sensor + f'/cm?cmnd=Power%20{status_sensor}')
-        print('http://' + ip_sensor + f'/cm?cmnd=Power%20{status_sensor}')
-        print('switch:', switch)
-        print('status_sensor:', status_sensor)
         switch.raise_for_status()
-        result = switch.json()
-        print('result:', result)
-        # return redirect('/interaction/commands/' + ip_sensor, JsonResponse(result))
-        # доработать через ajax
-        # ping_sensor.delay()
-        # return JsonResponse(result)
+        result = switch.json()  # получаем словарь после запроса
         return redirect('/interaction/allsensors/', JsonResponse(result))
     else:
-        # Датчик надоступен по пингу записываем его статус в базу данных
+        # Датчик не доступен по ping записываем его статус в базу данных
         sensor = Sensor.objects.get(ip_sensor=ip_sensor)
-        sensor.status_sensor = 'down'
-        print('status without ping:', sensor.status_sensor)
+        sensor.status_sensor = 'down'  # Обновляем поле в базе данных данным по умолчанию
         sensor.save(update_fields=["status_sensor"])
-        # return JsonResponse({'status': 'down'})
         return redirect('/interaction/allsensors/', JsonResponse({'status': 'down'}))
-
-
-# # получение данных из бд
-# def index(request):
-#     # фильтрация
-#     guest = User.objects.all()
-#     return render(request, "interaction/index.html", {"guest": guest})
-
-
-# добавление данных в бд
-# def create(request):
-#     initialize()
-#     # если запрос POST, сохраняем данные
-#     if request.method == "POST":
-#         guest = User()
-#         guest.name = request.POST.get("name")
-#         location_ids = request.POST.getlist("location")
-#         guest.save()
-#         # получаем все выбранные курсы по их id
-#         location = Location.objects.filter(id__in=location_ids)
-#         guest.location.set(location, through_defaults={"mark": 0})
-#         return HttpResponseRedirect("/")
-#     # передаем данные в шаблон
-#     location = Location.objects.all()
-#     return render(request, "interaction/create.html", {"location": location})
-
-
-# def initialize():
-#     # Student.objects.all().delete()
-#     # Course.objects.all().delete()
-#     if Location.objects.all().count() == 0:
-#         Location.objects.create(name="room1")
-#         Location.objects.create(name="room2")
-#         Location.objects.create(name="room3")
-
-
-# def show_guest(request):
-#     all_guest = User.objects.all()
-#     print(all_guest)
-#     return render(request, "interaction/showguest.html", {'all_guest': all_guest})
-
-
-# функция вывода постов для определенного гостя
-
-# @login_required
-# def show_guest_location(request):
-#     # создается список из имен доступных для пользователя зон
-#     available_locations = []
-#     for location in Location.objects.filter(guest=request.user):
-#         available_locations.append(location.name_location)
-#
-#     # Фильтруем датчики так, чтобы выбрать только те, которые находятся в этих зонах
-#
-#     available_sensor = Sensor.objects.filter(location__name_location__in=available_locations)
-#     return render(request, "interaction/show_guest_location.html", {'available_sensor': available_sensor})
-
-
-# получение данных от датчика из json
-# def sensor_get_information(request):
-#     http = urllib3.PoolManager()
-#     url_sensor = 'http://192.168.0.89/cm?cmnd=Status1'
-#     response = http.request('GET', url_sensor)
-#
-#     print(response.status)
-#     return response.status
-
-
-# def ping_sensor(request, ip_sensor, status_sensor):
-#     print('START ping')
-#     # Проверка доступности датчика
-#     if ping(ip_sensor):
-#         sensor = Sensor.objects.get(ip_sensor=ip_sensor)
-#         sensor.status_sensor = status_sensor
-#         sensor.save(update_fields=["status_sensor"])
-#         data = {'ip_sensor': ip_sensor, 'status_sensor': status_sensor}
-#         return render(request, "interaction/ping.html", context=data)
-#     else:
-#         sensor = Sensor.objects.get(ip_sensor=ip_sensor)
-#         sensor.status_sensor = 'down'
-#         print('status without ping:', sensor.status_sensor)
-#         sensor.save(update_fields=["status_sensor"])
-#         return render(request, "interaction/ping.html", sensor.status_sensor)
-
-
-
-
-        # else: # Датчик не доступен по пингу
-        #     sensor.status_sensor = 'down' #присваиваем статус 'down'
-        #     print(('ip sensor + sensor status: 3', sensor.ip_sensor, sensor.status_sensor))
-        # sensor.save(update_fields=["status_sensor"])  # записываем стату в базу данных
-
-
-    #
-    # sensor = Sensor.objects.get(ip_sensor=ip_sensor)
-    # url = f'http://{ip_sensor}/cm?cmnd=Status0'
-    # r = requests.get(url)
-    # sensor_dict = r.json()
-    # # for key in sensor_dict["Status"]:
-    # #     print(key)
-    # for value in sensor_dict["Status"]:
-    #     print(value)
-
-
-# # добавляем картинку
-# def image_upload_view(request):
-#     """Process images uploaded by users"""
-#     if request.method == 'POST':
-#         form = ImageForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             # Get the current instance object to display in the template
-#             img_obj = form.instance
-#             return render(request, 'interaction/about.html', {'form': form, 'img_obj': img_obj})
-#     else:
-#         form = ImageForm()
-#     return render(request, 'interaction/about.html', {'form': form})
