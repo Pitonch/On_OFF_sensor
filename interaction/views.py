@@ -1,12 +1,14 @@
 from ping3 import ping
 import requests
 from django.shortcuts import render, redirect
-from .models import Sensor, Location
+from .models import Sensor, Location, Image
 from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 import urllib3
+from django.shortcuts import render
+from .forms import ImageForm
 
 
 
@@ -14,9 +16,10 @@ def home(request):
     # print(request.user)
     return render(request, 'interaction/base.html')
 
-@login_required
+
 def about(request):
-    return render(request, 'interaction/about.html', {'content': '<h1>About</h1>'})
+    data = Image.objects.all()
+    return render(request, 'interaction/about.html', {'data': data})
 
 # @login_required
 # def settings(request):
@@ -216,3 +219,16 @@ def sensor_on_off(request, ip_sensor, status_sensor):
     #     print(value)
 
 
+# # добавляем картинку
+# def image_upload_view(request):
+#     """Process images uploaded by users"""
+#     if request.method == 'POST':
+#         form = ImageForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             # Get the current instance object to display in the template
+#             img_obj = form.instance
+#             return render(request, 'interaction/about.html', {'form': form, 'img_obj': img_obj})
+#     else:
+#         form = ImageForm()
+#     return render(request, 'interaction/about.html', {'form': form})

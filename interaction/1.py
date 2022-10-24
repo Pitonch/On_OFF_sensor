@@ -12,16 +12,14 @@ import requests
 
 
 
-# http = urllib3.PoolManager()
-# url = 'http://192.168.0.89/cm?cmnd=Status'
-# resp = http.request('GET', url)
-# # print(resp.status)
-# try:
-#     if resp.status == 200:
-#         print('sensor online')
-#         print(resp.data.decode('utf-8'))
-# except TimeoutError:
-#     print('sensor offline')
+http = urllib3.PoolManager()
+url = 'http://192.168.0.89/cm?cmnd=Status'
+resp = http.request('GET', url)
+# print(resp.status)
+if resp.status == 200:
+    print('sensor online')
+    print(resp.data.decode('utf-8'))
+
 
 # def ping_sensor():
 #     ip_sensor = '192.168.0.89'
