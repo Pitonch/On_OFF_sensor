@@ -34,6 +34,6 @@ urlpatterns = [
     # path('commands/on_sensor/', interaction_views.on_sensor, name='on_sensor'),
     ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL,
-                          document_root=settings.MEDIA_ROOT)
+# if settings.DEBUG:
+#     urlpatterns += static(settings.MEDIA_URL,
+#                           document_root=settings.MEDIA_ROOT)
