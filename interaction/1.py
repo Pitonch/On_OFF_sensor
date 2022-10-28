@@ -64,12 +64,12 @@ if resp.status == 200:
 #     )
 # print(r.status)
 # print('type_r:', type(r))
-# sensor_dict = json.loads(r.data)
+# sensor_dict = json.loads(r.data_)
 # print('type_r:', type(sensor_dict))
 # print(sensor_dict)
 # print('status:', sensor_dict["Status"]["Power"])
 #
-# print(json.loads(r.data.decode('utf-8')))
+# print(json.loads(r.data_.decode('utf-8')))
 
 # r = requests.get("http://192.168.0.89/cm?cmnd=Status0")
 # sensor_dict = r.json()
@@ -119,7 +119,7 @@ if resp.status == 200:
 #                 'POST',
 #                 url)
 #             if response.status == 200:
-#                 sensor_dict = json.loads(response.data) #то ответ переводим в словарь в виде json
+#                 sensor_dict = json.loads(response.data_) #то ответ переводим в словарь в виде json
 #                 status_and_power = sensor_dict["Status"]["Power"]
 #                 sensor = Sensor.objects.get(ip_sensor=sensor.ip_sensor) #находим датчик по ip
 #                 sensor.status_sensor = status_and_power #получаем его статус

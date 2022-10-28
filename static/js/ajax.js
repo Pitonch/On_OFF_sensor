@@ -25,7 +25,7 @@ function sensor_switch(event) {
 //     $.ajax({
 //         url: 'commands/sensor/' + status,
 //         type: 'GET',
-//         success: function( data ) {
+//         success: function( data_ ) {
 //           // Здесь можно создать проверку на вкл/откл датчика
 //         }
 //     });
@@ -39,8 +39,8 @@ function sensor_switch(event) {
 //     $.ajax({
 //         url: 'commands/sensor/' + status,
 //         type: 'POST',
-//         data: request_data,
-//         success: function( data ) {
+//         data_: request_data,
+//         success: function( data_ ) {
 //           // Здесь можно создать проверку на вкл/откл датчика
 //         }
 //     });
@@ -55,9 +55,9 @@ function sensor_switch(event) {
 //         $.ajax({
 //             method : 'GET',
 //             url: $(this).attr('ip_sensor'),
-//             data: "",
+//             data_: "",
 //             dataType: 'json',
-//             success: (function( data ) {})
+//             success: (function( data_ ) {})
 //     })
 // }
 //
