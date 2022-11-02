@@ -19,7 +19,7 @@ async def send_video_file_id(message: Message):
 async def send_photo(message: Message):
     chat_id = message.from_user.id
     photo_file_id = 'AgACAgIAAxkBAAIBPmNfxCwBkRjW1CiePTb8v3X_VDhsAAJdwDEbZuEAAUtJtZSrcOGmRAEAAwIAA20AAyoE'
-    path = Path(pathlib.Path.cwd(), "media", "images", 'sensor.png')
+    path = Path(__file__).parent.parent.parent.parent / 'media' /'images' / 'sensor.png'
     print(path)
     photo_bytes = InputFile(path_or_bytesio=path)  #'D:\it\On_OFF_sensor\media\images\sensor.png'
     video_file_id = ''
