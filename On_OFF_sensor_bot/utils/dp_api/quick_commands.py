@@ -4,9 +4,9 @@ from On_OFF_sensor_bot.utils.dp_api.dp_gino import db
 from On_OFF_sensor_bot.utils.dp_api.schemas.user import User
 
 
-async def add_user(user_id: int, name: str, updated_name: str):
+async def add_user(user_id: int, name: str, update_name: str):
     try:
-        user = User(user_id=user_id, name=name, updated_name=updated_name)
+        user = User(user_id=user_id, name=name, update_name=update_name)
         await user.create()
     except UniqueViolationError:
         print('нет пользователя')
@@ -23,10 +23,10 @@ async def count_users():
 
 
 async def select_user(user_id):
-    user = await User.queri.where(User.user_id == user_id).gino.first()
+    user = await User.query.where(User.user_id == user_id).gino.first()
     return user
 
 
-async def update_use_name(user_id, new_name):
+async def update_user_name(user_id, new_name):
     user = await select_user(user_id)
     await user.update(update_name=new_name).apply()
