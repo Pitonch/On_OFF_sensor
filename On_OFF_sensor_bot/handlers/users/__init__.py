@@ -1,4 +1,5 @@
-from .start import dp
+# from .start import dp
+from .bot_start import dp
 from .help import dp
 from .hello import dp
 from .menu import dp
