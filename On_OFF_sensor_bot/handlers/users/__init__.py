@@ -6,8 +6,9 @@ from .menu import dp
 from .buttons import dp
 from .test import dp
 from .inline_menu import dp
-from .register import dp
+# from .register import dp
 from .media import dp
+from .bot_registration import dp
 
 from .error import dp
 

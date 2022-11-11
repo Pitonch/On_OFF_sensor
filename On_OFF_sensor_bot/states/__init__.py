@@ -1,2 +1,2 @@
 from .test import Register
-from .registration import Reg
+from .registration import Registration

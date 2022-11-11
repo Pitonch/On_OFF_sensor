@@ -27,6 +27,7 @@ async def bot_register(message: types.Message):
                          )
     await Registration.name.set()
 
+
 @dp.message_handler(IsPrivate(), state=Registration.name)
 async def get_name(message: types.Message, state=FSMContext):
     answer = message.text
@@ -44,7 +45,7 @@ async def get_name(message: types.Message, state=FSMContext):
     await Registration.phone.set()
 
 
-@dp.message_handler(IsPrivate(), state=Registration.name)
+@dp.message_handler(IsPrivate(), state=Registration.phone)
 async def get_phone(message: types.Message, state=FSMContext):
     answer = message.text
     markup = ReplyKeyboardMarkup(
@@ -58,7 +59,6 @@ async def get_phone(message: types.Message, state=FSMContext):
     try:
         if answer.replace('+', '').isnumeric():
             await state.update_data(phone=answer)
-
             await message.answer('теперь введи возраст, целым числом', reply_markup=markup)
             await Registration.age.set()
         else:
@@ -69,8 +69,22 @@ async def get_phone(message: types.Message, state=FSMContext):
 
 @dp.message_handler(IsPrivate(), state=Registration.age)
 async def get_age(message: types.Message, state=FSMContext):
-    answer = message.text()
+    answer = message.text
     if answer.isnumeric():
         if int(answer) < 150:
             await state.update_data(age=answer)
+            data = await state.get_data()
+            name = data.get('name')
+            phone = data.get('phone')
+            age = data.get('age')
+            await message.answer(f'Регистрация ОК\n'
+                                 f'name: {name}\n'
+                                 f'Age: {age}\n'
+                                 f'Phone: {phone}\n'
+                                 f'позвоним тебе по номеру {phone}')
+        else:
+            await message.answer('введите правльно возраст')
+    else:
+        await message.answer('введите правльно возраст целым числом')
+
 
