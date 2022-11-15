@@ -5,3 +5,8 @@ class Registration(StatesGroup):
     name = State()
     phone = State()
     age = State()
+
+
+class Accept(StatesGroup):
+    user_id = State()
+

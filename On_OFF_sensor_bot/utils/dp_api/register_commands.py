@@ -17,7 +17,7 @@ async def select_registration():
 
 
 async def select_registration_by_user_id(user_id: int):
-    registration = await Registration.query.where(Registration.user_id == 'created').gino.first()
+    registration = await Registration.query.where(Registration.user_id == user_id).gino.first()
     return registration
 
 
