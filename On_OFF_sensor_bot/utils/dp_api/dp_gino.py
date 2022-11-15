@@ -1,9 +1,9 @@
 import datetime
-from gino import Gino
-import sqlalchemy as sa
 from typing import List
+
+import sqlalchemy as sa
 from aiogram import Dispatcher
-from sqlalchemy import Column, BigInteger, String
+from gino import Gino
 
 from On_OFF_sensor_bot.data_ import config
 

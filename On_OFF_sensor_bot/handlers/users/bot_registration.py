@@ -3,9 +3,12 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Command
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
+from On_OFF_sensor_bot.data_.config import admins_id
 from On_OFF_sensor_bot.filters import IsPrivate
 from On_OFF_sensor_bot.loader import dp
 from On_OFF_sensor_bot.states.registration import Registration
+from On_OFF_sensor_bot.utils.dp_api import register_commands, dp_gino
+
 
 
 @dp.message_handler(IsPrivate(), Command('register'))
@@ -86,5 +89,11 @@ async def get_age(message: types.Message, state=FSMContext):
             await message.answer('введите правльно возраст')
     else:
         await message.answer('введите правльно возраст целым числом')
+
+
+@dp.message_handler(IsPrivate(), text='/registrations', user_id=admins_id)
+async def get_reg(message: types.Message):
+    rega = await register_commands.select_registration()
+    await message.answer((f'Дата создания:' {}))
 
 
