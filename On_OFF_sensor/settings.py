@@ -88,10 +88,13 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'On_OFF_sensor_db',
-        'USER': 'On_OFF_sensor',
-        'PASSWORD': 'TdQ1spCU/',
-        'HOST': '127.0.0.1',
+        #'NAME': 'On_OFF_sensor_db',
+        'NAME': 'on_off_sensor_db',
+        #'USER': 'On_OFF_sensor',
+        'USER': 'on_off_sensor_user',
+        #'PASSWORD': 'TdQ1spCU/',
+        'PASSWORD': 'On_OFF_sensor_pass_1985',
+        'HOST': '46.101.188.71',
         'PORT': '5432',
     }
 }
